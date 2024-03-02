@@ -12,8 +12,8 @@ class MyTheme {
     ),
     textTheme:const TextTheme(
       displayLarge: TextStyle(fontSize: 500.0, fontWeight: FontWeight.bold),
-      displayMedium: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
-      displaySmall: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+      displayMedium: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal, color: Color(0xffe5eee9)),
+      displaySmall: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal, color: Color(0xffe5eee9)),
     )
   );
 

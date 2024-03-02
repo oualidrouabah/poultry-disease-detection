@@ -12,15 +12,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () {
-      checkConnection();
+    Timer(const Duration(seconds: 3), () {
+      checkConnection(context);
     });    
   }
 
-  Future<void> checkConnection() async {
+  Future<void> checkConnection(BuildContext context) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
       Navigator.push(
@@ -34,11 +35,27 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     }
   }
+  Future<void> checkConnection_v2 (BuildContext context) async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>const HomeScreen()),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>const NoConnectionScreen()),
+      );
+    }
+  }
+
   
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Theme.of(context).hintColor,
       body: Center(
         child: Column(

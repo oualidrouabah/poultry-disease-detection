@@ -13,17 +13,32 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: Theme.of(context).hintColor,
       body:Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      //open a side menu
+                      
+                    },
+                    icon: const Icon(Icons.menu),
+                    color: Theme.of(context).primaryColor,
+                  ),
+              ],
+            ),
+            const SizedBox(height: 50,),
             const Text('Welcome to Djaaja Siha', style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
-            const SizedBox(height: 30,),
+            const SizedBox(height: 25,),
             Builder(builder:(context) => 
               Text('Take or Upload a picture', style: Theme.of(context).textTheme.bodyMedium,),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 25,),
             Builder(builder: (context) {
               return ElevatedButton(
                 onPressed: () async{
@@ -44,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children:[
                     Icon(Icons.camera_alt_outlined, color: Theme.of(context).hintColor,),
                     const SizedBox(width: 10,),
-                    Text('Take a photo', style: Theme.of(context).textTheme.bodyMedium,),
+                    Text('Take a photo', style: Theme.of(context).textTheme.displayMedium,),
                   ],
                 )
               );
@@ -71,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children:[
                     Icon(Icons.file_upload_outlined, color: Theme.of(context).hintColor,),
                     const SizedBox(width: 10,),
-                    Text('Upload', style: Theme.of(context).textTheme.bodyMedium,),
+                    Text('Upload', style: Theme.of(context).textTheme.displayMedium,),
                   ],
                 )
               );

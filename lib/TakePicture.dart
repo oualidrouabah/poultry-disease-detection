@@ -51,12 +51,60 @@ class _TakePictureState extends State<TakePicture> {
             },
           ),
           backgroundColor: Theme.of(context).primaryColor,
+          //rounded shape
+          //shape: const RoundedRectangleBorder(
+           // borderRadius: BorderRadius.only(
+            //  bottomLeft: Radius.circular(10),
+            //  bottomRight: Radius.circular(10),
+            //),
+          //)
         ),
-        body: SafeArea(
-            child: _cameraController.value.isInitialized
-                ? CameraPreview(_cameraController)
-                : const Center(child: CircularProgressIndicator()
-                )
+        body: Stack(
+          children:[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: _cameraController.value.isInitialized
+                  ? CameraPreview(_cameraController)
+                  : const Center(child: CircularProgressIndicator(
+                    color: Color(0xFF0fc09c),
+                    backgroundColor: Color(0xffe5eee9),
+                    strokeWidth: 5,
+                  )
+                  ),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    child: FloatingActionButton(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      onPressed: () async {
+                        /*try {
+                          await _cameraController.takePicture().then((value) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => DisplayPicture(imagePath: value.path)));
+                          });
+                        } catch (e) {
+                          debugPrint("error $e");
+                        }*/
+                      },
+                      child: Builder(
+                        builder: (context) {
+                          return Icon(Icons.camera_alt, color: Theme.of(context).hintColor,);
+                        }
+                      ),
+                      
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         )
     );
   }
