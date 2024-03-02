@@ -1,7 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:djaaja_siha/HomeScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class NoConnectionScreen extends StatefulWidget {
   const NoConnectionScreen({super.key});
