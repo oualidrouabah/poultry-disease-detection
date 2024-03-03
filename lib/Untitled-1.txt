@@ -1,63 +1,66 @@
-child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                color: Colors.blue,
-                child: const Expanded(
-                  flex: 3,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            onPressed: menu,
-                            icon: Icon(Icons.menu),
-                          ),
-                        ],
-                      ),
-                      Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Welcome to Djaaja Siha',
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              'The best place',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+Stack(
+          children:[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: _cameraController.value.isInitialized
+                  ? CameraPreview(_cameraController)
+                  : const Center(child: CircularProgressIndicator(
+                    color: Color(0xFF0fc09c),
+                    backgroundColor: Color(0xffe5eee9),
+                    strokeWidth: 5,
+                  )
                   ),
-                ),
-              ),
-              ElevatedButton(onPressed: menu, child: Text('Your Button'),),
-              Container(
-                color: Colors.red,
-                child:const Expanded(
-                  flex: 2,
-                  child: Column(
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
-                        onPressed: menu,
-                        child: Text('upload picture'),
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        child: FloatingActionButton(
+                          backgroundColor: Theme.of(context).primaryColor,
+                          onPressed: () async {
+                            /*try {
+                              await _cameraController.takePicture().then((value) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => DisplayPicture(imagePath: value.path)));
+                              });
+                            } catch (e) {
+                              debugPrint("error $e");
+                            }*/
+                          },
+                          child: Builder(
+                            builder: (context) {
+                              return Icon(Icons.camera_alt, color: Theme.of(context).hintColor,);
+                            }
+                          ),
+                          
+                        ),
                       ),
+                        Container(
+            padding: const EdgeInsets.all(20),
+            child: FloatingActionButton(
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () {
+                // Functionality to control flash light
+              },
+              child: Builder(
+                builder: (context) {
+                  return Icon(Icons.flash_on, color: Theme.of(context).hintColor,);
+                }
+              ),
+            ),
+          )
                     ],
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          ],
+        )

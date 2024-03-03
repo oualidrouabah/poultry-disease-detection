@@ -1,8 +1,16 @@
+import 'package:camera/camera.dart';
 import 'package:djaaja_siha/SplashScreen.dart';
 import 'package:djaaja_siha/Theme.dart';
 import 'package:flutter/material.dart';
 
-main() {
+List<CameraDescription> cameras = [];
+Future<void> main() async{
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    cameras = await availableCameras();
+  } on CameraException catch (e) {
+    print('Error in fetching the cameras: $e');
+  }
   runApp(const MyApp());
 }
 
