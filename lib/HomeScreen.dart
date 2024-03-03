@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     backgroundColor: Theme.of(context).primaryColor,
                     //minimumSize: Size(100, 50),
-                    fixedSize:const Size(190, 50),
+                    fixedSize:const Size(200, 50),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,7 +1,10 @@
 // ignore_for_file: sized_box_for_whitespace
+import 'dart:developer';
+
 import 'package:djaaja_siha/main.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class TakePicture extends StatefulWidget {
   @override
@@ -21,6 +24,7 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
   double _currentExposureOffset = 0.0;
   FlashMode? _currentFlashMode;
   bool _isRearCameraSelected = true;
+  bool _isCameraPermissionGranted = false;
 
   void onNewCameraSelected(CameraDescription cameraDescription) async {
     final previousCameraController = controller;
@@ -74,7 +78,7 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    onNewCameraSelected(cameras[0]);
+    getPermissionStatus();
     super.initState();
   }
 
@@ -116,6 +120,34 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
       return null;
     }
   }
+  
+  void onViewFinderTap(TapDownDetails details, BoxConstraints constraints) {
+    if (controller == null) {
+      return;
+    }
+    final offset = Offset(
+      details.localPosition.dx / constraints.maxWidth,
+      details.localPosition.dy / constraints.maxHeight,
+    );
+    controller!.setExposurePoint(offset);
+    controller!.setFocusPoint(offset);
+  }
+
+  getPermissionStatus() async {
+    await Permission.camera.request();
+    var status = await Permission.camera.status;
+    if (status.isGranted) {
+      log('Camera Permission: GRANTED');
+      setState(() {
+        _isCameraPermissionGranted = true;
+      });
+      // Set and initialize the new camera
+      onNewCameraSelected(cameras[0]);
+      //refreshAlreadyCapturedImages();
+    } else {
+      log('Camera Permission: DENIED');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +171,7 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
           //)
         ),*/
       body: _isCameraInitialized
-          ? SafeArea(
+          ? _isCameraInitialized ? SafeArea(
               child: Stack(
                 children: [
                   Container(
@@ -148,6 +180,19 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
                     child: AspectRatio(
                       aspectRatio: 1 / controller!.value.aspectRatio,
                       child: controller!.buildPreview(),
+                      /*
+                          CameraPreview(
+                          controller!,
+                          child: LayoutBuilder(builder:
+                              (BuildContext context, BoxConstraints constraints) {
+                            return GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTapDown: (details) =>
+                                  onViewFinderTap(details, constraints),
+                            );
+                          }),
+                        )
+                       */
                     ),
                   ),
                   Column(
@@ -162,8 +207,6 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
                               Navigator.pop(context);
                             },
                           ),
-                          //todo here
-                          //SizedBox(width: 100,),
                           DropdownButton<ResolutionPreset>(
                             dropdownColor: Colors.black87,
                             underline: Container(),
@@ -188,7 +231,7 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
                               });
                               onNewCameraSelected(controller!.description);
                             },
-                            hint: const Text("Select item"),
+                            hint: const Text("Select"),
                           ),
                         ],
                       ), ////////////////////////////////////
@@ -239,7 +282,7 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
                           ],
                         ),
                       ),
-                      ///////////////////////////////////////77
+                      ///////////////////////////////////////
                       Row(
                         children: [
                           Container(
@@ -273,107 +316,141 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
                         ],
                       ),
                       Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            XFile? rawImage = await takePicture();
-                            //File imageFile = File(rawImage!.path);
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              XFile? rawImage = await takePicture();
+                              //File imageFile = File(rawImage!.path);
 
-                            //int currentUnix = DateTime.now().millisecondsSinceEpoch;
-                            //final directory = await getApplicationDocumentsDirectory();
-                            //String fileFormat = imageFile.path.split('.').last;
+                              //int currentUnix = DateTime.now().millisecondsSinceEpoch;
+                              //final directory = await getApplicationDocumentsDirectory();
+                              //String fileFormat = imageFile.path.split('.').last;
 
-                            // await imageFile.copy(
-                            //'${directory.path}/$currentUnix.$fileFormat',
-                            //);
-                          },
-                          child: const Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Icon(Icons.circle,
-                                  color: Colors.white38, size: 80),
-                              Icon(Icons.circle, color: Colors.white, size: 65),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            setState(() {
-                              _currentFlashMode = FlashMode.off;
-                            });
-                            await controller!.setFlashMode(
-                              FlashMode.off,
-                            );
-                          },
-                          child: Icon(
-                            Icons.flash_off,
-                            color: _currentFlashMode == FlashMode.off
-                                ? Colors.amber
-                                : Colors.white,
-                          ),
+                              // await imageFile.copy(
+                              //'${directory.path}/$currentUnix.$fileFormat',
+                              //);
+                            },
+                            child: const Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Icon(Icons.circle,
+                                    color: Colors.white38, size: 80),
+                                Icon(Icons.circle, color: Colors.white, size: 65),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                setState(() {
+                                  _currentFlashMode = FlashMode.off;
+                                });
+                                await controller!.setFlashMode(
+                                  FlashMode.off,
+                                );
+                              },
+                              child: Icon(
+                                Icons.flash_off,
+                                color: _currentFlashMode == FlashMode.off
+                                    ? Colors.amber
+                                    : Colors.white,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                setState(() {
+                                  _currentFlashMode = FlashMode.auto;
+                                });
+                                await controller!.setFlashMode(
+                                  FlashMode.auto,
+                                );
+                              },
+                              child: Icon(
+                                Icons.flash_auto,
+                                color: _currentFlashMode == FlashMode.auto
+                                    ? Colors.amber
+                                    : Colors.white,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                setState(() {
+                                  _isCameraInitialized = false;
+                                });
+                                onNewCameraSelected(
+                                  //bool _isRearCameraSelected = true; // Define the variable _isRearCameraSelected
+                                  cameras[_isRearCameraSelected ? 1 : 0],
+                                );
+                                setState(() {
+                                  _isRearCameraSelected = !_isRearCameraSelected;
+                                });
+                              },
+                              child: Icon(
+                                Icons.flash_on,
+                                color: _currentFlashMode == FlashMode.always
+                                    ? Colors.amber
+                                    : Colors.white,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                setState(() {
+                                  _currentFlashMode = FlashMode.torch;
+                                });
+                                await controller!.setFlashMode(
+                                  FlashMode.torch,
+                                );
+                              },
+                              child: Icon(
+                                Icons.highlight,
+                                color: _currentFlashMode == FlashMode.torch
+                                    ? Colors.amber
+                                    : Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                        InkWell(
-                          onTap: () async {
-                            setState(() {
-                              _currentFlashMode = FlashMode.auto;
-                            });
-                            await controller!.setFlashMode(
-                              FlashMode.auto,
-                            );
-                          },
-                          child: Icon(
-                            Icons.flash_auto,
-                            color: _currentFlashMode == FlashMode.auto
-                                ? Colors.amber
-                                : Colors.white,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            setState(() {
-                              _isCameraInitialized = false;
-                            });
-                            onNewCameraSelected(
-                              //bool _isRearCameraSelected = true; // Define the variable _isRearCameraSelected
-                              cameras[_isRearCameraSelected ? 1 : 0],
-                            );
-                            setState(() {
-                              _isRearCameraSelected = !_isRearCameraSelected;
-                            });
-                          },
-                          child: Icon(
-                            Icons.flash_on,
-                            color: _currentFlashMode == FlashMode.always
-                                ? Colors.amber
-                                : Colors.white,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            setState(() {
-                              _currentFlashMode = FlashMode.torch;
-                            });
-                            await controller!.setFlashMode(
-                              FlashMode.torch,
-                            );
-                          },
-                          child: Icon(
-                            Icons.highlight,
-                            color: _currentFlashMode == FlashMode.torch
-                                ? Colors.amber
-                                : Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
                     ],
                   ),          
+                ],
+              ),
+            ): Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(),
+                  Text(
+                    'Permission denied',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(height: 16),
+                  Builder(
+                builder: (context) {
+                  return ElevatedButton(
+                    onPressed: (){
+                      getPermissionStatus();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      backgroundColor: Theme.of(context).primaryColor,
+                      //minimumSize: Size(100, 50),
+                      fixedSize:const Size(190, 50),
+                    ),
+                    child: Text('Get Permission', style: Theme.of(context).textTheme.bodyMedium,),
+              
+                  );
+                }
+              ),
                 ],
               ),
             )
