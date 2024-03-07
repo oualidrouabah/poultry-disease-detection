@@ -1,66 +1,326 @@
-Stack(
-          children:[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: _cameraController.value.isInitialized
-                  ? CameraPreview(_cameraController)
-                  : const Center(child: CircularProgressIndicator(
-                    color: Color(0xFF0fc09c),
-                    backgroundColor: Color(0xffe5eee9),
-                    strokeWidth: 5,
-                  )
-                  ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+// ignore_for_file: file_names
+
+import 'package:camera/camera.dart';
+import 'package:djaaja_siha/TakePicture.dart';
+import 'package:djaaja_siha/Upload.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      backgroundColor: Theme.of(context).hintColor,
+      key: _scaffoldKey,
+      drawer: cstmDrawer(context),
+      body: Container(
+        decoration:const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(
+                0.8, 0.0), // 10% of the width, so there are ten blinds.
+            colors: [
+              Color.fromARGB(31, 255, 255, 255),
+              Color.fromARGB(38, 0, 238, 107)
+            ], // red to yellow
+            tileMode: TileMode.mirror, // repeats the gradient over the canvas
+          ),
+        ),
+        child: SafeArea(
+          child: Container(
+            margin: const EdgeInsets.only(top: 18, left: 24, right: 24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.title,
+                      style:const TextStyle(
+                        fontSize: 18,
+                        color: Color.fromARGB(255, 0, 168, 132),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    RotatedBox(
+                      quarterTurns: 135,
+                      child: IconButton(
+                        icon: Icon(Icons.bar_chart_rounded),
+                        color: Color.fromARGB(255, 0, 168, 132),
+                        iconSize: 25,
+                        onPressed: () {
+                         // _key.currentState!.openDrawer();
+                        },
+                      ),
+                    )
+                  ],
+                ),
+                Expanded(
+                  child: ListView(
+                    physics: const BouncingScrollPhysics(),
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        child: FloatingActionButton(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          onPressed: () async {
-                            /*try {
-                              await _cameraController.takePicture().then((value) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => DisplayPicture(imagePath: value.path)));
-                              });
-                            } catch (e) {
-                              debugPrint("error $e");
-                            }*/
-                          },
-                          child: Builder(
-                            builder: (context) {
-                              return Icon(Icons.camera_alt, color: Theme.of(context).hintColor,);
-                            }
-                          ),
-                          
+                      const SizedBox(height: 5),
+                      Center(
+                        child: Image.asset(
+                          'assets/logo.png',
+                          scale: 1.2,
                         ),
                       ),
-                        Container(
-            padding: const EdgeInsets.all(20),
-            child: FloatingActionButton(
-              backgroundColor: Theme.of(context).primaryColor,
-              onPressed: () {
-                // Functionality to control flash light
-              },
-              child: Builder(
-                builder: (context) {
-                  return Icon(Icons.flash_on, color: Theme.of(context).hintColor,);
-                }
-              ),
-            ),
-          )
+                      const SizedBox(height: 1),
+                      const Center(
+                        child: Text(
+                          'Welcome in CHICKEN AI App for the detection of poultry disease in fecal',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 31, 31, 31)),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                //_getImageFromCamera();
+                              },
+                              style: ButtonStyle(
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.only(
+                                          top: 40,
+                                          bottom: 40,
+                                          left: 26,
+                                          right: 26)),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color.fromARGB(255, 0, 168, 132)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30)))),
+                              icon: Column(
+                                children: [
+                                  Icon(
+                                    Icons.camera_alt,
+                                    size: 77,
+                                    color: Colors.white,
+                                  ),
+                                  Text(
+                                    "Use camera",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  )
+                                ],
+                              )),
+                          IconButton(
+                              onPressed: () {
+                                //var getfromgal = _getImageFromGallery();
+                                // print(res);
+                              },
+                              style: ButtonStyle(
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.only(
+                                          top: 40,
+                                          bottom: 40,
+                                          left: 18,
+                                          right: 18)),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color.fromARGB(255, 0, 168, 132)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30)))),
+                              icon: Column(
+                                children: [
+                                  Icon(
+                                    Icons.cloud_upload,
+                                    size: 77,
+                                    color: Colors.white,
+                                  ),
+                                  Text(
+                                    "Import picture",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  )
+                                ],
+                              )),
+                        ],
+                      ),
                     ],
                   ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  
+  cstmDrawer(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 45,
+                  backgroundColor: Theme.of(context).hintColor,
+                  //backgroundImage: AssetImage('assets/logo.png'),
+                  child: ClipOval(
+                    child: Image.asset('assets/logo.png', fit: BoxFit.cover,),
+                  ),
+                ),
+                Text(AppLocalizations.of(context)!.title, style: TextStyle(fontSize: 24, color: Colors.white),),
+              ],
+            )
+          ),
+          ListTile(
+            leading: const Icon(Icons.medical_information_outlined),
+            title: Text( AppLocalizations.of(context)!.drawer1),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.language_outlined),
+            title: Text( AppLocalizations.of(context)!.drawer2),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.help_outline),
+            title: Text( AppLocalizations.of(context)!.drawer3),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.info_outline),
+            title: Text( AppLocalizations.of(context)!.drawer4),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
+    );
+  }
+  
+  _showAlertDialog(cntx) {
+    return showDialog<void>(
+      context: cntx,
+      barrierDismissible: false, 
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          title: Text('Choose your favourite language!'),
+          content: Center(),
+        );
+      },
+    );
+  }
+}
+
+:Container(
+        padding: const EdgeInsets.only(top: 20),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            //crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                      onPressed: () =>_scaffoldKey.currentState?.openDrawer(),
+                      icon: const Icon(Icons.menu),
+                      color: Theme.of(context).primaryColor,
+                    ),
                 ],
               ),
-            ),
-          ],
-        )
+              const SizedBox(height: 50,),
+              Text(
+                AppLocalizations.of(context)!.title,
+                style:const TextStyle(
+                  fontFamily:'Raleway' ,
+                  fontSize: 50, 
+                  fontWeight: FontWeight.normal,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 25,),
+              const SizedBox(height: 200,),
+              Builder(builder: (context) {
+                return ElevatedButton(
+                  onPressed: () async{
+                    await availableCameras().then((value) => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) =>const TakePicture())));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    backgroundColor: Theme.of(context).primaryColor,
+                    //minimumSize: Size(100, 50),
+                    fixedSize:const Size(230, 50),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:[
+                      Icon(Icons.camera_alt_outlined, color: Theme.of(context).hintColor,),
+                      const SizedBox(width: 10,),
+                      Text(AppLocalizations.of(context)!.takepics, style: Theme.of(context).textTheme.displayMedium,),
+                    ],
+                  )
+                );
+              }),
+              const SizedBox(height: 20,),
+              Text('or', style: Theme.of(context).textTheme.bodyMedium,),
+              const SizedBox(height: 20,),
+              Builder(builder: (context) {
+                return ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) =>const Upload()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    backgroundColor: Theme.of(context).primaryColor,
+                    //minimumSize: Size(100, 50),
+                    fixedSize:const Size(170, 50),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:[
+                      Icon(Icons.file_upload_outlined, color: Theme.of(context).hintColor,),
+                      const SizedBox(width: 10,),
+                      Text('Upload', style: Theme.of(context).textTheme.displayMedium,),
+                    ],
+                  )
+                );
+              }),
+            ],
+          ),
+        ),
+      )

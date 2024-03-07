@@ -1,0 +1,18 @@
+{
+    "takepics": "التقاط صورة",
+    "uploadpics": "تحميل صورة",
+    "title": "Chicken AI",
+    "wlcmtext": "مرحبًا بك",
+    "drawer1": "مكتبة الأمراض",
+    "drawer2": "اللغة",
+    "drawer3": "المساعدة والدعم",
+    "drawer4": "حول",
+    "nocnxmessage": "لا يوجد اتصال بالإنترنت",
+    "again": "حاول مرة أخرى",
+    "permissiondenied": "تم رفض الإذن",
+    "getperm": "الحصول على الإذن",
+    "initcam": "تهيئة الكاميرا",
+    "noselect": "لم يتم تحديد أي صورة",
+    "confirmation":"تأكيد",
+    "cancel":"إلغاء"
+}

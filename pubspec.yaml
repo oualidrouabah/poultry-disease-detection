@@ -35,8 +35,13 @@ dependencies:
   camera: ^0.10.5+9
   path_provider: ^2.1.2
   path: ^1.9.0
-  gallery_picker: ^0.5.1
+  image_picker: ^0.8.6
+  image_cropper: ^3.0.1
   permission_handler: ^11.3.0
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +59,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -1,0 +1,18 @@
+{
+    "takepics": "Prendre",
+    "uploadpics": "Télécharger",
+    "title": "Chicken IA",
+    "wlcmtext": "Bienvenue dans Chicken AI",
+    "drawer1": "Bibliothèque des maladies",
+    "drawer2": "Langue",
+    "drawer3": "Aide et support",
+    "drawer4": "À propos",
+    "nocnxmessage": "Pas de connexion Internet",
+    "again": "Réessayer",
+    "permissiondenied": "Autorisation refusée",
+    "getperm": "Obtenir la permission",
+    "initcam": "Initialisation de la caméra",
+    "noselect": "Aucune image sélectionnée",
+    "confirmation":"Confirmé",
+    "cancel":"Annuler"
+}

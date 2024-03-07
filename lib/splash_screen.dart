@@ -1,14 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:djaaja_siha/HomeScreen.dart';
-import 'package:djaaja_siha/NoConnectionScreen.dart';
+import 'package:djaaja_siha/home_screen.dart';
+import 'package:djaaja_siha/no_connection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity/connectivity.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -35,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     }
   }
-  Future<void> checkConnection_v2 (BuildContext context) async {
+ /* Future<void> checkConnection_v2 (BuildContext context) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
       Navigator.push(
@@ -48,12 +50,11 @@ class _SplashScreenState extends State<SplashScreen> {
         MaterialPageRoute(builder: (context) =>const NoConnectionScreen()),
       );
     }
-  }
+  }*/
 
   
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context) {   
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).hintColor,
@@ -71,8 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
               return CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
               );
-            }
-            )
+            })
           ],
         ),
       ),

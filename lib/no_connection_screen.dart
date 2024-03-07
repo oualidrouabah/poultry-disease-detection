@@ -1,6 +1,7 @@
 import 'package:connectivity/connectivity.dart';
-import 'package:djaaja_siha/HomeScreen.dart';
+import 'package:djaaja_siha/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoConnectionScreen extends StatefulWidget {
   const NoConnectionScreen({super.key});
@@ -45,7 +46,7 @@ class _NoConnectionScreenState extends State<NoConnectionScreen> {
               const SizedBox(height: 20,),
               Builder(
                 builder: (context) {
-                  return Text('No Internet Connection', style: Theme.of(context).textTheme.bodyMedium,);
+                  return Text( AppLocalizations.of(context)!.nocnxmessage, style: Theme.of(context).textTheme.bodyMedium,);
                 }
               ),
                const SizedBox(height: 20,),
@@ -61,13 +62,13 @@ class _NoConnectionScreenState extends State<NoConnectionScreen> {
                       //minimumSize: Size(100, 50),
                       fixedSize:const Size(190, 50),
                     ),
-                    child: Text('Try Again', style: Theme.of(context).textTheme.bodyMedium,),
+                    child: Text(AppLocalizations.of(context)!.again, style: Theme.of(context).textTheme.bodyMedium,),
               
                   );
                 }
               ),
-              ]
-            )
+            ]
+          )
         )
       ),
     );
