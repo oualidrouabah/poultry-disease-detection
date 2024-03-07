@@ -1,4 +1,5 @@
-{
+{   
+    "@@locale": "ar",
     "takepics": "التقاط صورة",
     "uploadpics": "تحميل صورة",
     "title": "Chicken AI",

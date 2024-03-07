@@ -1,4 +1,5 @@
 {
+    "@@locale": "fr",
     "takepics": "Prendre",
     "uploadpics": "Télécharger",
     "title": "Chicken IA",
@@ -13,6 +14,6 @@
     "getperm": "Obtenir la permission",
     "initcam": "Initialisation de la caméra",
     "noselect": "Aucune image sélectionnée",
-    "confirmation":"Confirmé",
-    "cancel":"Annuler"
+    "confirmation": "Confirmé",
+    "cancel": "Annuler"
 }

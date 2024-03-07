@@ -1,18 +1,20 @@
 {
+    "@@locale": "en",
     "takepics": "Take a picture",
     "uploadpics": "Upload",
     "title": "Chicken AI",
-    "wlcmtext":"Welcome in CHICKEN AI App for the detection of poultry disease in fecal",
-    "drawer1":"Disease Library",
-    "drawer2":"Langue",
-    "drawer3":"Help & Support",
-    "drawer4":"About",
-    "nocnxmessage":"No Internet Connection",
-    "again":"Try Again",
-    "permissiondenied":"Permission denied",
-    "getperm":"Get Permission",
-    "initcam":"Initializing Camera",
-    "noselect":"No Image Selected",
-    "confirmation":"Confirme",
-    "cancel":"Cancel"
+    "wlcmtext": "Welcome in CHICKEN AI App for the detection of poultry disease in fecal",
+    "drawer1": "Disease Library",
+    "drawer2": "Langue",
+    "drawer3": "Help & Support",
+    "drawer4": "About",
+    "nocnxmessage": "No Internet Connection",
+    "again": "Try Again",
+    "permissiondenied": "Permission denied",
+    "getperm": "Get Permission",
+    "initcam": "Initializing Camera",
+    "noselect": "No Image Selected",
+    "confirmation": "Confirme",
+    "cancel": "Cancel"
 }
+    
