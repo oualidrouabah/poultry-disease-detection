@@ -2,6 +2,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:djaaja_siha/main.dart';
+import 'package:djaaja_siha/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -350,16 +351,11 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
                                 InkWell(
                                   onTap: () async {
                                     setState(() {
-                                      _isCameraInitialized = false;
+                                      _currentFlashMode = FlashMode.always;
                                     });
-                                    onNewCameraSelected(
-                                      //bool _isRearCameraSelected = true; // Define the variable _isRearCameraSelected
-                                      cameras[_isRearCameraSelected ? 1 : 0],
+                                    await controller!.setFlashMode(
+                                      FlashMode.always,
                                     );
-                                    setState(() {
-                                      _isRearCameraSelected =
-                                          !_isRearCameraSelected;
-                                    });
                                   },
                                   child: Icon(
                                     Icons.flash_on,
@@ -444,11 +440,11 @@ class ShowTakenImg extends StatefulWidget {
 
 class _ShowTakenImgState extends State<ShowTakenImg> {
   String? imgPath;
+  
   @override
   void initState() {
     super.initState();
     imgPath = widget.imgPath;
-
   }
   @override
   Widget build(BuildContext context) {
@@ -465,9 +461,9 @@ class _ShowTakenImgState extends State<ShowTakenImg> {
         Column(mainAxisAlignment: MainAxisAlignment.end, children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(40),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   onPressed: () {
@@ -480,7 +476,7 @@ class _ShowTakenImgState extends State<ShowTakenImg> {
                     fixedSize: const Size(200, 70),
                   ),
                   child: Icon(
-                    Icons.close,
+                    Icons.refresh_outlined,
                     color: Theme.of(context).hintColor,
                     size: 50,
                   ),
@@ -490,8 +486,12 @@ class _ShowTakenImgState extends State<ShowTakenImg> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    //change to handle the image
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>  Result(image: imgPath!)
+                      )
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),

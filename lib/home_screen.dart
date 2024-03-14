@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:camera/camera.dart';
+import 'package:djaaja_siha/about.dart';
+import 'package:djaaja_siha/diseases_lib.dart';
 import 'package:djaaja_siha/langage_constant.dart';
 import 'package:djaaja_siha/main.dart';
 import 'package:djaaja_siha/take_picture.dart';
@@ -201,11 +203,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   CircleAvatar(
                     radius: 45,
                     backgroundColor: Theme.of(context).hintColor,
-                    //backgroundImage: AssetImage('assets/logo.png'),
                     child: ClipOval(
                       child: Image.asset(
                         'assets/logo.png',
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -223,7 +224,13 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: const Icon(Icons.medical_information_outlined),
             title: Text(AppLocalizations.of(context)!.drawer1),
             onTap: () {
-              _showAlertDialogInformation(context);
+              //_showAlertDialogLib(context);
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const DiseaseLib()
+                )
+              );
             },
           ),
           ListTile(
@@ -234,17 +241,15 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.help_outline),
-            title: Text(AppLocalizations.of(context)!.drawer3),
-            onTap: () {
-              _showAlertDialogInfos(context);
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.info_outline),
             title: Text(AppLocalizations.of(context)!.drawer4),
             onTap: () {
-              _showAlertDialogAbout(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) =>const AboutScreen()
+                )
+              );
             },
           )
         ],
@@ -333,44 +338,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           },
-        );
-      },
-    );
-  }
-
-  _showAlertDialogAbout(cntx) {
-    return showDialog(
-      context: cntx,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.drawer4),
-          content: Center(),
-        );
-      },
-    );
-  }
-  
-  _showAlertDialogInfos(cntx) {
-    return showDialog(
-      context: cntx,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return  AlertDialog(
-          title: Text(AppLocalizations.of(context)!.drawer3),
-          content: Center(),
-        );
-      },
-    );
-  }
-  _showAlertDialogInformation(cntx) {
-    return showDialog(
-      context: cntx,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.drawer1),
-          content: Center(),
         );
       },
     );

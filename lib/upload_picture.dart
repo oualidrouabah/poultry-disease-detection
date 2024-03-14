@@ -1,6 +1,5 @@
-// ignore_for_file: file_names
-
 import 'dart:io';
+import 'package:djaaja_siha/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,8 +24,8 @@ class _UploadState extends State<Upload> {
 
   @override
   void initState() {
-    imagePicker();
     super.initState();
+    imagePicker();
   }
 
   @override
@@ -67,7 +66,7 @@ class _UploadState extends State<Upload> {
                                       left: 10,
                                       right: 10)),
                               backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromARGB(255, 0, 168, 132)),
+                                  Theme.of(context).primaryColor),
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
@@ -117,7 +116,6 @@ class _UploadState extends State<Upload> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              //Navigator.pop(context);
                               imagePicker();
                             },
                             style: ElevatedButton.styleFrom(
@@ -127,7 +125,7 @@ class _UploadState extends State<Upload> {
                               fixedSize: const Size(200, 70),
                             ),
                             child: Icon(
-                              Icons.close,
+                              Icons.refresh_outlined,
                               color: Theme.of(context).hintColor,
                               size: 50,
                             ),
@@ -137,8 +135,12 @@ class _UploadState extends State<Upload> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              //todo change to handle the image
-                              Navigator.pop(context);
+                              Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>  Result(image: image!.path)
+                                    )
+                                );
                             },
                             style: ElevatedButton.styleFrom(
                               shape: const CircleBorder(),

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:developer';
 import 'package:camera/camera.dart';
 import 'package:djaaja_siha/langage_constant.dart';
@@ -19,7 +21,7 @@ Future<void> main() async{
   } on CameraException catch (e) {
     log('Error in fetching the cameras: $e');
   }
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -34,7 +36,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
   void setLocale(Locale newLocal) {
     setState(() {
       local=newLocal;
@@ -57,9 +58,9 @@ class _MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const[
-        Locale('en'), // English
-        Locale('ar'), // Arabic
-        Locale('fr'), // French
+        Locale('en'), 
+        Locale('ar'), 
+        Locale('fr'), 
       ],
       locale: local,
       debugShowCheckedModeBanner: false,
@@ -68,7 +69,4 @@ class _MyAppState extends State<MyApp> {
       home:const SplashScreen(),
     );
   }
-  
 }
-
-

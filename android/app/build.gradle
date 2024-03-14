@@ -26,7 +26,11 @@ android {
     namespace "com.example.djaaja_siha"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
-
+    
+    aaptOptions {
+        noCompress 'tflite'
+        noCompress 'lite'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -45,7 +49,7 @@ android {
         applicationId "com.example.djaaja_siha"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -53,8 +57,6 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
     }

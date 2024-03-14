@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names, no_leading_underscores_for_local_identifiers
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
