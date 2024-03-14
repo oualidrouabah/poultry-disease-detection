@@ -27,7 +27,6 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
   double _maxAvailableExposureOffset = 0.0;
   double _currentExposureOffset = 0.0;
   FlashMode? _currentFlashMode;
-  bool _isRearCameraSelected = true;
   bool _isCameraPermissionGranted = false;
   
 
