@@ -480,9 +480,6 @@ class _ShowTakenImgState extends State<ShowTakenImg> {
                     size: 50,
                   ),
                 ),
-                const SizedBox(
-                  width: 30,
-                ),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(

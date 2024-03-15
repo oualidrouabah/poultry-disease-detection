@@ -112,7 +112,7 @@ class _UploadState extends State<Upload> {
                         height: MediaQuery.of(context).size.height * 0.7,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton(
                             onPressed: () {
@@ -129,9 +129,6 @@ class _UploadState extends State<Upload> {
                               color: Theme.of(context).hintColor,
                               size: 50,
                             ),
-                          ),
-                          const SizedBox(
-                            width: 30,
                           ),
                           ElevatedButton(
                             onPressed: () {
