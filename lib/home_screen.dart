@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
 import 'package:camera/camera.dart';
 import 'package:djaaja_siha/about.dart';
