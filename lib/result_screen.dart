@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:developer';
 import 'package:djaaja_siha/home_screen.dart';
 import 'package:djaaja_siha/langage_constant.dart';
@@ -20,7 +22,7 @@ class _ResultState extends State<Result> {
   Future<void> _tfLteInit() async {
     try {
       await Tflite.loadModel(
-        model: "assets/kheva4.tflite",
+        model: "assets/densenet_model.tflite",
         labels: "assets/labels.txt",
       );
     } catch (e) {
@@ -42,9 +44,9 @@ class _ResultState extends State<Result> {
   }
 
   @override
-  void dispose() {
+  void dispose() async{
     super.dispose();
-    Tflite.close();
+    await Tflite.close();
   }
 
   @override
@@ -142,7 +144,7 @@ class _ResultState extends State<Result> {
                                     Text(
                                       "${translation(context).suffer} : ",
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style:const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.normal,
                                         color: Color.fromARGB(255, 232, 51, 51),
@@ -152,7 +154,7 @@ class _ResultState extends State<Result> {
                                     label == "Coccidiosis"
                                         ? Text(
                                             translation(context).coccidiosis,
-                                            style: TextStyle(
+                                            style:const TextStyle(
                                               fontSize: 22,
                                               color: Color.fromARGB(
                                                   255, 232, 51, 51),
@@ -162,7 +164,7 @@ class _ResultState extends State<Result> {
                                         : label == "Salmonella"
                                             ? Text(
                                                 translation(context).salmonella,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 22,
                                                   color: Color.fromARGB(
                                                       255, 232, 51, 51),
@@ -172,7 +174,7 @@ class _ResultState extends State<Result> {
                                             : Text(
                                                 translation(context)
                                                     .newCastleDisease,
-                                                style: TextStyle(
+                                                style:const TextStyle(
                                                   fontSize: 22,
                                                   color: Color.fromARGB(
                                                       255, 232, 51, 51),
@@ -202,7 +204,7 @@ class _ResultState extends State<Result> {
                         ],
                       ),
                       onPressed: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => HomeScreen())),
+                          MaterialPageRoute(builder: (_) =>const HomeScreen())),
                       style: ButtonStyle(
                           fixedSize:
                               const MaterialStatePropertyAll(Size(190, 70)),

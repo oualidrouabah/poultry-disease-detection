@@ -112,7 +112,7 @@ class _UploadState extends State<Upload> {
                         height: MediaQuery.of(context).size.height * 0.7,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           ElevatedButton(
                             onPressed: () {
@@ -122,16 +122,13 @@ class _UploadState extends State<Upload> {
                               shape: const CircleBorder(),
                               backgroundColor: Theme.of(context).primaryColor,
                               //minimumSize: Size(100, 50),
-                              fixedSize: const Size(200, 70),
+                              fixedSize: const Size(100, 60),
                             ),
                             child: Icon(
                               Icons.refresh_outlined,
                               color: Theme.of(context).hintColor,
-                              size: 50,
+                              size: 30,
                             ),
-                          ),
-                          const SizedBox(
-                            width: 30,
                           ),
                           ElevatedButton(
                             onPressed: () {
@@ -145,12 +142,12 @@ class _UploadState extends State<Upload> {
                             style: ElevatedButton.styleFrom(
                               shape: const CircleBorder(),
                               backgroundColor: Theme.of(context).primaryColor,
-                              fixedSize: const Size(200, 70),
+                              fixedSize: const Size(100, 60),
                             ),
                             child: Icon(
                               Icons.check,
                               color: Theme.of(context).hintColor,
-                              size: 50,
+                              size: 30,
                             ),
                           ),
                         ],

@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Container(
             margin: const EdgeInsets.only(top: 18, left: 24, right: 24),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 const TakePicture())));
                               },
                               style: ButtonStyle(
-                                  fixedSize:const MaterialStatePropertyAll(Size(190, 190)),
+                                  fixedSize:const MaterialStatePropertyAll(Size(150, 150)),
                                   padding: MaterialStateProperty.all(
                                       const EdgeInsets.only(
                                           top: 40,
@@ -123,16 +123,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                     )
                               ),
                               icon: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   const Icon(
                                     Icons.camera_alt,
-                                    size: 77,
+                                    size: 40,
                                     color: Colors.white,
                                   ),
-                                  Text(
-                                    AppLocalizations.of(context)!.takepics,
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 18),
+                                  Expanded(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.takepics,
+                                      style: const TextStyle(
+                                        color: Colors.white, 
+                                        fontSize: 15
+                                      ),
+                                    ),
                                   )
                                 ],
                               )),
@@ -146,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                               style: ButtonStyle(
-                                  fixedSize:const MaterialStatePropertyAll(Size(190, 190)),
+                                  fixedSize:const MaterialStatePropertyAll(Size(150, 150)),
                                   padding: MaterialStateProperty.all(
                                       const EdgeInsets.only(
                                           top: 40,
@@ -160,16 +165,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                           borderRadius:
                                               BorderRadius.circular(30)))),
                               icon: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   const Icon(
                                     Icons.upload,
-                                    size: 77,
+                                    size: 40,
                                     color: Colors.white,
                                   ),
-                                  Text(
-                                    AppLocalizations.of(context)!.uploadpics,
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 18),
+                                  Expanded(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.uploadpics,
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 17),
+                                    ),
                                   )
                                 ],
                               )
