@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 3), () {
      // checkConnection(context);
-     Navigator.push(
+     Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) =>const HomeScreen()),
       );
@@ -30,12 +30,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> checkConnection(BuildContext context) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) =>const NoConnectionScreen()),
       );
     } else {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) =>const HomeScreen()),
       );
@@ -44,12 +44,12 @@ class _SplashScreenState extends State<SplashScreen> {
  /* Future<void> checkConnection_v2 (BuildContext context) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) =>const HomeScreen()),
       );
     } else {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) =>const NoConnectionScreen()),
       );

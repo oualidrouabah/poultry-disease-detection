@@ -203,7 +203,7 @@ class _ResultState extends State<Result> {
                           )
                         ],
                       ),
-                      onPressed: () => Navigator.push(context,
+                      onPressed: () => Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (_) =>const HomeScreen())),
                       style: ButtonStyle(
                           fixedSize:

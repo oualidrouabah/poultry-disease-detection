@@ -20,8 +20,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  _getWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
+  
   @override
   Widget build(BuildContext context) {
+    final buttonWidth= _getWidth(context)*0.4;
     return Scaffold(
       backgroundColor: Theme.of(context).hintColor,
       key: _scaffoldKey,
@@ -77,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Center(
                         child: Image.asset(
                           'assets/logo.png',
-                          scale: 1.2,
+                          scale: MediaQuery.of(context).size.width*0.002,
                         ),
                       ),
                       const SizedBox(height: 1),
@@ -85,16 +91,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           AppLocalizations.of(context)!.wlcmtext,
                           textAlign: TextAlign.center,
-                          style:const TextStyle(
-                              fontSize: 18,
+                          style:TextStyle(
+                              fontSize: MediaQuery.of(context).size.width*0.04,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 0, 168, 132),
+                              color: const Color.fromARGB(255, 0, 168, 132),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           IconButton(
                               onPressed: () async {
@@ -106,13 +112,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 const TakePicture())));
                               },
                               style: ButtonStyle(
-                                  fixedSize:const MaterialStatePropertyAll(Size(150, 150)),
+                                  fixedSize:MaterialStatePropertyAll(Size(buttonWidth, buttonWidth)),
                                   padding: MaterialStateProperty.all(
                                       const EdgeInsets.only(
-                                          top: 40,
-                                          bottom: 40,
-                                          left: 26,
-                                          right: 26)),
+                                          top: 20,
+                                          bottom: 20,
+                                          left: 18,
+                                          right: 18)),
                                   backgroundColor: MaterialStateProperty.all(
                                       const Color.fromARGB(255, 0, 168, 132)),
                                   shape: MaterialStateProperty.all(
@@ -124,19 +130,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               icon: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Icon(
+                                  Icon(
                                     Icons.camera_alt,
-                                    size: 40,
+                                    size: buttonWidth*0.4,
                                     color: Colors.white,
                                   ),
-                                  Expanded(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.takepics,
-                                      style: const TextStyle(
-                                        color: Colors.white, 
-                                        fontSize: 15
-                                      ),
+                                  Text(
+                                    AppLocalizations.of(context)!.takepics,
+                                    style: TextStyle(
+                                      color: Colors.white, 
+                                      fontSize: buttonWidth*0.1
                                     ),
                                   )
                                 ],
@@ -151,13 +156,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                               style: ButtonStyle(
-                                  fixedSize:const MaterialStatePropertyAll(Size(150, 150)),
+                                  fixedSize:MaterialStatePropertyAll(Size(buttonWidth, buttonWidth)),
                                   padding: MaterialStateProperty.all(
                                       const EdgeInsets.only(
-                                          top: 40,
-                                          bottom: 40,
+                                          top: 20,
+                                          bottom: 20,
                                           left: 18,
-                                          right: 18)),
+                                          right: 18
+                                      )
+                                  ),
                                   backgroundColor: MaterialStateProperty.all(
                                       const Color.fromARGB(255, 0, 168, 132)),
                                   shape: MaterialStateProperty.all(
@@ -166,17 +173,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                               BorderRadius.circular(30)))),
                               icon: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Icon(
+                                  Icon(
                                     Icons.upload,
-                                    size: 40,
+                                    size: buttonWidth*0.4,
                                     color: Colors.white,
                                   ),
-                                  Expanded(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.uploadpics,
-                                      style: const TextStyle(
-                                          color: Colors.white, fontSize: 17),
+                                  Text(
+                                    AppLocalizations.of(context)!.uploadpics,
+                                    style: TextStyle(
+                                      color: Colors.white, 
+                                      fontSize: buttonWidth*0.1
                                     ),
                                   )
                                 ],

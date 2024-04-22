@@ -132,7 +132,7 @@ class _UploadState extends State<Upload> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) =>  Result(image: image!.path)

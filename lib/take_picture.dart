@@ -1,6 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace, use_build_context_synchronously, library_private_types_in_public_api
 import 'dart:developer';
 import 'dart:io';
+import 'package:djaaja_siha/home_screen.dart';
 import 'package:djaaja_siha/main.dart';
 import 'package:djaaja_siha/result_screen.dart';
 import 'package:flutter/material.dart';
@@ -191,7 +192,11 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
                                 color: Theme.of(context).hintColor,
                                 icon: const Icon(Icons.arrow_back),
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                                    (route) => false,
+                                  );
                                 },
                               ),
                               
@@ -292,7 +297,7 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
                                   //setState(() {
                                     //_takenImage = rawImage;
                                   //});
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (_) => ShowTakenImg(
@@ -445,6 +450,7 @@ class _ShowTakenImgState extends State<ShowTakenImg> {
     super.initState();
     imgPath = widget.imgPath;
   }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -466,7 +472,11 @@ class _ShowTakenImgState extends State<ShowTakenImg> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) =>const TakePicture()),
+                      (route) => false,
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
@@ -482,7 +492,7 @@ class _ShowTakenImgState extends State<ShowTakenImg> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (_) =>  Result(image: imgPath!)
