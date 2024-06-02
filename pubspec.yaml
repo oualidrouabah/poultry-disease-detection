@@ -30,6 +30,8 @@ dependencies:
   firebase_core: ^2.32.0
   firebase_auth: ^4.20.0
   cloud_firestore: ^4.17.5
+  flutter_facebook_auth: ^6.0.4
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:

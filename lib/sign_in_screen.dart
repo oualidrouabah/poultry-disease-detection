@@ -1,7 +1,10 @@
-import 'package:djaaja_siha/home_screen.dart';
-import 'package:djaaja_siha/login_screen.dart';
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 
+import 'package:djaaja_siha/home_screen.dart';
+import 'package:djaaja_siha/login_screen.dart';
+import 'authentification/auth_handler.dart';
 import 'authentification/auth_service.dart';
 import 'authentification/user_model.dart';
 
@@ -14,9 +17,10 @@ class Singup extends StatefulWidget {
 }
 
 class _SingupState extends State<Singup>{
+  final AuthHandler _authHandler = AuthHandler(); 
+  
   bool _passwordVisible = false;
   bool _passwordVisibleConfirmation = false;
-  final AuthService _authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
@@ -25,14 +29,12 @@ class _SingupState extends State<Singup>{
   bool _isLogin = true;
   String _errorMessage = '';
   bool _isPasswordError = false;
-  bool _isEmailError = false;
 
   void _toggleFormMode() {
     setState(() {
       _isLogin = !_isLogin;
       _errorMessage = '';
       _isPasswordError = false;
-      _isEmailError = false;
     });
   }
 
@@ -48,6 +50,7 @@ class _SingupState extends State<Singup>{
     super.initState();
      _passwordVisible = false;
     _passwordVisibleConfirmation = false;
+    _toggleFormMode();
   }
   @override
   Widget build(BuildContext context) {
@@ -178,6 +181,7 @@ class _SingupState extends State<Singup>{
                     cursorColor: Colors.grey,
                     style:TextStyle(color: Theme.of(context).primaryColor),
                     decoration: InputDecoration(
+                      errorText: _isPasswordError ? 'Passwords do not match.' : null,
                       enabledBorder:  OutlineInputBorder(
                         borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 0.0),
                       ),
@@ -219,6 +223,7 @@ class _SingupState extends State<Singup>{
                     cursorColor: Theme.of(context).primaryColor,
                     style:TextStyle(color: Theme.of(context).primaryColor),
                     decoration: InputDecoration(
+                      errorText: _isPasswordError ? 'Passwords do not match.' : null,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 0.0),
                       ),
@@ -261,78 +266,67 @@ class _SingupState extends State<Singup>{
                     ),
                   ),
                   const SizedBox(height: 20, ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(width: 20,),
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Theme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                        ),
-                        child: IconButton(
-                          icon:const Icon (Icons.facebook),
-                          color:Theme.of(context).primaryColor,
-                          onPressed: () {},
+                  Center(
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Theme.of(context).primaryColor,
+                          width: 2,
                         ),
                       ),
-                      const SizedBox(width: 20),
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Theme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                        ),
-                        child: IconButton(
-                          icon:const Icon(Icons.g_mobiledata_outlined),
-                          color:Theme.of(context).primaryColor,
-                          onPressed: () {},
-                        ),
+                      child: IconButton(
+                        icon:const Icon(Icons.g_mobiledata_outlined),
+                        color:Theme.of(context).primaryColor,
+                        onPressed: () async {
+                          // Call signInWithGoogle method from AuthService
+                          UserModel? user = await AuthService().signInWithGoogle();
+                          
+                          // Check if user is not null to proceed
+                          if (user != null) {
+                            // User signed in successfully, navigate to appropriate screen
+                            _navigateToHomePage();
+                          } else {
+                            // Handle sign in failure
+                            // You can show an error message or perform any other action
+                            // For example, showing a snackbar with the error message
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Failed to sign in with Google. Please try again.'),
+                              ),
+                            );
+                          }
+                        },
                       ),
-                    ],
+                    ),
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () async{
-                      if (_isLogin) {                       
-                        UserModel? user = await _authService.createUserWithEmailAndPassword(
+                      if (_isLogin) {
+                        if (_passwordController.text != _confirmPasswordController.text) {
+                          setState(() {
+                            _isPasswordError = true; // Set error flag to true
+                          });
+                          return; // Exit function if passwords do not match
+                        } else {
+                          setState(() {
+                            _isPasswordError = false;
+                            //_errorMessage = '';
+                          });
+                        }
+                        _authHandler.signup(
+                          context,
                           _emailController.text,
                           _passwordController.text,
                           _nameController.text,
-                        );
-                        if (user != null) {
-                          _navigateToHomePage();
-                        } else {
-                          setState(() {
-                            _errorMessage = 'Failed to register. Please try again.';
-                            print(_errorMessage);
-                          });
-                        }
+                        );                
                       }
 
-                      UserModel? user = await _authService.signInWithEmailAndPassword(
-                          _emailController.text,
-                          _passwordController.text,
-                        );
-                        if (user != null) {
-                          _navigateToHomePage();
-                        } else {
-                          setState(() {
-                            _errorMessage = 'Failed to sign in. Please check your credentials.';
-                            print(_errorMessage);
-                          });
-                        }
+                     
 
                     },
                     style: ElevatedButton.styleFrom(

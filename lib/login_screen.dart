@@ -4,6 +4,8 @@ import 'package:djaaja_siha/home_screen.dart';
 import 'package:djaaja_siha/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'authentification/auth_handler.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -13,10 +15,11 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final AuthHandler _authHandler = AuthHandler();
+
   bool _passwordVisible = false ;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
   
   void _navigateToHomePage() {
     Navigator.pushReplacement(
@@ -183,19 +186,11 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   onPressed: () async {
-                    UserModel? user = await _authService.signInWithEmailAndPassword(
-                          _emailController.text,
-                          _passwordController.text,
-                        );
-                        if (user != null) {
-                          _navigateToHomePage();
-                        } else {
-                          setState(() {
-                            //_errorMessage = 'Failed to sign in. Please check your credentials.';
-                            print('Failed to sign in. Please check your credentials.');
-                          });
-                        }
-                    print("login");
+                    await _authHandler.login(
+                      context,
+                      _emailController.text,
+                      _passwordController.text,
+                    );
                   },
                   child: const Text(
                     'LOGIN', 
@@ -213,27 +208,8 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 2,
-                        ),
-                      ),
-                      child: IconButton(
-                        icon:const Icon (Icons.facebook),
-                        color:Theme.of(context).primaryColor,
-                        onPressed: () {},
-                      ),
-                    ),
-                    const SizedBox(width: 20),
+                Center(
+                  child: 
                     Container(
                       width: 50,
                       height: 50,
@@ -248,10 +224,26 @@ class _LoginState extends State<Login> {
                       child: IconButton(
                         icon:const Icon(Icons.g_mobiledata_outlined),
                         color:Theme.of(context).primaryColor,
-                        onPressed: () {},
+                        onPressed: () async {
+                            // Call signInWithGoogle method from AuthService
+                            UserModel? user = await AuthService().signInWithGoogle();
+                            // Check if user is not null to proceed
+                            if (user != null) {
+                              // User signed in successfully, navigate to appropriate screen
+                              _navigateToHomePage();
+                            } else {
+                              // Handle sign in failure
+                              // You can show an error message or perform any other action
+                              // For example, showing a snackbar with the error message
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Failed to sign in with Google. Please try again.'),
+                                ),
+                              );
+                            }
+                          },
                       ),
                     ),
-                  ],
                 ),
                 const SizedBox(height: 20),
                 Row(

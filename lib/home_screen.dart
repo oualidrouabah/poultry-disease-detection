@@ -5,14 +5,15 @@ import 'package:djaaja_siha/about.dart';
 import 'package:djaaja_siha/diseases_lib.dart';
 import 'package:djaaja_siha/langage_constant.dart';
 import 'package:djaaja_siha/login_screen.dart';
-import 'package:djaaja_siha/main.dart';
+import 'package:djaaja_siha/my_app.dart';
 import 'package:djaaja_siha/take_picture.dart';
 import 'package:djaaja_siha/upload_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
-
 import 'authentification/auth_service.dart';
+import 'authentification/user_provide.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,10 +33,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final buttonWidth= _getWidth(context)*0.4;
+    var user = Provider.of<UserProvider>(context).user;
+    
     return Scaffold(
       backgroundColor: Theme.of(context).hintColor,
       key: _scaffoldKey,
-      drawer: cstmDrawer(context),
+      drawer: cstmDrawer(context, user),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -207,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  cstmDrawer(BuildContext context) {
+  cstmDrawer(BuildContext context, user) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -217,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Theme.of(context).primaryColor,
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
@@ -231,9 +234,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Text(
-                    AppLocalizations.of(context)!.title,
+                    "Welcome ${user.name}",
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                         color: Theme.of(context).hintColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -274,12 +277,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
             ListTile(
               leading: const Icon(Icons.logout),
-              title: Text("Logout"),
+              title:const Text("Logout"),
               onTap: () async {
                 await _authService.signOut();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => Login()), // Replace LoginScreen with your actual login screen widget
+                  MaterialPageRoute(builder: (context) =>const Login()),
                 );
               },
             )

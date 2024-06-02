@@ -81,6 +81,41 @@ class AuthService {
     return null;
   }
 
+   // Sign in with Google
+  Future<UserModel?> signInWithGoogle() async {
+    try {
+      // Trigger the Google Sign In flow
+      final GoogleAuthProvider googleProvider = GoogleAuthProvider();
+      final UserCredential result = await _auth.signInWithPopup(googleProvider);
+      final User? user = result.user;
+
+      if (user != null) {
+        // Check if user exists in Firestore, if not, create a new user
+        final DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
+
+        if (!userDoc.exists) {
+          // If user is new, create a new user document in Firestore
+          final UserModel userModel = UserModel(
+            uid: user.uid,
+            email: user.email!,
+            name: user.displayName ?? 'user',
+            accountType: 'user', // Default account type
+          );
+          await _firestore.collection('users').doc(user.uid).set(userModel.toMap());
+        }
+
+        // Return UserModel
+        return _userFromFirebaseUser(user, name: user.displayName);
+      }
+    } on FirebaseAuthException catch (e) {
+      print('FirebaseAuthException: ${e.message}');
+      return null;
+    } catch (e) {
+      print('Exception: $e');
+      return null;
+    }
+    return null;
+  }
   // Sign out
   Future<void> signOut() async {
     try {

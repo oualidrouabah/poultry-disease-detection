@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unused_import
 
 import 'package:djaaja_siha/home_screen.dart';
 import 'package:djaaja_siha/login_screen.dart';
