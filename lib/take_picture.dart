@@ -194,12 +194,11 @@ class _TakePictureState extends State<TakePicture> with WidgetsBindingObserver {
                                 onPressed: () {
                                   Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                                     (route) => false,
                                   );
                                 },
                               ),
-                              
                             ],
                           ), ////////////////////////////////////
                           Container(

@@ -16,7 +16,7 @@ class Result extends StatefulWidget {
 
 class _ResultState extends State<Result> {
   String? imgPath;
-  String label = "";
+  String? label ;
   var confidence;
 
   Future<void> _tfLteInit() async {
@@ -52,6 +52,7 @@ class _ResultState extends State<Result> {
   @override
   void initState() {
     super.initState();
+    label="";
     _tfLteInit();
   }
 
@@ -207,13 +208,13 @@ class _ResultState extends State<Result> {
                           MaterialPageRoute(builder: (_) =>const HomeScreen())),
                       style: ButtonStyle(
                           fixedSize:
-                              const MaterialStatePropertyAll(Size(190, 70)),
-                          padding: MaterialStateProperty.all(
+                              const WidgetStatePropertyAll(Size(190, 70)),
+                          padding: WidgetStateProperty.all(
                               const EdgeInsets.only(
                                   top: 10, bottom: 10, left: 10, right: 10)),
-                          backgroundColor: MaterialStateProperty.all(
+                          backgroundColor: WidgetStateProperty.all(
                               Theme.of(context).primaryColor),
-                          shape: MaterialStateProperty.all(
+                          shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)))),
                     )

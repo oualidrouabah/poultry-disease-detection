@@ -1,7 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:djaaja_siha/home_screen.dart';
+import 'package:djaaja_siha/login_screen.dart';
 import 'package:djaaja_siha/no_connection_screen.dart';
+import 'package:djaaja_siha/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity/connectivity.dart';
 import 'dart:async';
@@ -22,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
      // checkConnection(context);
      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>const HomeScreen()),
+        MaterialPageRoute(builder: (context) =>const Login()),
       );
     });    
   }

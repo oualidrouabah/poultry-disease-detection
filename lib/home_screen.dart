@@ -4,12 +4,15 @@ import 'package:camera/camera.dart';
 import 'package:djaaja_siha/about.dart';
 import 'package:djaaja_siha/diseases_lib.dart';
 import 'package:djaaja_siha/langage_constant.dart';
+import 'package:djaaja_siha/login_screen.dart';
 import 'package:djaaja_siha/main.dart';
 import 'package:djaaja_siha/take_picture.dart';
 import 'package:djaaja_siha/upload_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui' as ui;
+
+import 'authentification/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final AuthService _authService = AuthService();
 
   _getWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
@@ -267,7 +271,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               );
             },
-          )
+          ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: Text("Logout"),
+              onTap: () async {
+                await _authService.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()), // Replace LoginScreen with your actual login screen widget
+                );
+              },
+            )
+          
         ],
       ),
     );
