@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-
 import 'package:djaaja_siha/home_screen.dart';
 import 'package:djaaja_siha/login_screen.dart';
 import 'authentification/auth_handler.dart';
@@ -27,13 +26,11 @@ class _SingupState extends State<Singup>{
   final TextEditingController _nameController = TextEditingController();
   
   bool _isLogin = true;
-  String _errorMessage = '';
   bool _isPasswordError = false;
 
   void _toggleFormMode() {
     setState(() {
       _isLogin = !_isLogin;
-      _errorMessage = '';
       _isPasswordError = false;
     });
   }
