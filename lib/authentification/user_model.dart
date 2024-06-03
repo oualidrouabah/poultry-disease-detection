@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class UserModel {
   final String uid;
   final String email;
@@ -30,4 +32,9 @@ class UserModel {
       accountType: map['accountType'],
     );
   }
+  // Convert a UserModel object to JSON string
+  String toJson() => json.encode(toMap());
+
+  // Create a UserModel object from JSON string
+  static UserModel fromJson(String source) => fromMap(json.decode(source));
 }

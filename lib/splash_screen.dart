@@ -6,7 +6,12 @@ import 'package:djaaja_siha/no_connection_screen.dart';
 import 'package:djaaja_siha/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
+
+import 'authentification/user_model.dart';
+import 'authentification/user_provide.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,14 +22,36 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  
+  Future<UserModel?> getUserModel() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userJson = prefs.getString('userModel');
+    if (userJson != null) {
+      return UserModel.fromJson(userJson);
+    }
+    return null;
+  }
+
+  
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-     // checkConnection(context);
-     Navigator.pushReplacement(
+    Timer(const Duration(seconds: 3), () async {
+      UserModel? user = await getUserModel();
+      print(user);
+      Provider.of<UserProvider>(context, listen: false).setUser(user);
+      if (user == null){
+        print("user null");
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) =>const Login()),
+        );
+        return;
+      } 
+      print("user not null");    
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>const Login()),
+        MaterialPageRoute(builder: (context) =>const HomeScreen()),
       );
     });    
   }

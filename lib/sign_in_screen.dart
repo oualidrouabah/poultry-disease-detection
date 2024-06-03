@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:djaaja_siha/home_screen.dart';
 import 'package:djaaja_siha/login_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'authentification/auth_service.dart';
 import 'authentification/user_model.dart';
 import 'authentification/user_provide.dart';
@@ -342,9 +343,9 @@ class _SingupState extends State<Singup>{
                             _passwordController.text,
                           );
                           if (user != null) {
-                            print("user not null login 0");
                             Provider.of<UserProvider>(context, listen: false).setUser(user);
-                            print("user not null login");
+                            final SharedPreferences prefs = await SharedPreferences.getInstance();
+                            await prefs.setString('userModel', user.toJson());
                             _navigateToHomePage();
                           } else {
                             setState(() {

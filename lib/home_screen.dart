@@ -11,6 +11,7 @@ import 'package:djaaja_siha/upload_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
 import 'authentification/auth_service.dart';
 import 'authentification/user_provide.dart';
@@ -275,18 +276,19 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-            ListTile(
+          ListTile(
               leading: const Icon(Icons.logout),
               title:const Text("Logout"),
               onTap: () async {
                 await _authService.signOut();
+                final SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.remove('userModel');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) =>const Login()),
                 );
               },
-            )
-          
+          )
         ],
       ),
     );

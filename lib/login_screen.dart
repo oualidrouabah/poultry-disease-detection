@@ -4,6 +4,7 @@ import 'package:djaaja_siha/home_screen.dart';
 import 'package:djaaja_siha/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'authentification/user_provide.dart';
 
@@ -196,8 +197,10 @@ class _LoginState extends State<Login> {
                           _emailController.text,
                           _passwordController.text,
                         );
-                        Provider.of<UserProvider>(context, listen: false).setUser(user);
                         if (user != null) {
+                          Provider.of<UserProvider>(context, listen: false).setUser(user);
+                          final SharedPreferences prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('userModel', user.toJson());
                           _navigateToHomePage();
                         } else {
                           setState(() {
