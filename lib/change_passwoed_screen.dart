@@ -16,7 +16,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   bool _passwordVisible = false;
   bool _newPasswordVisible = false;
-  String? _message;
 
   Future<void> _changePassword(context) async {
       String currentPassword = _passwordController.text;
@@ -27,7 +26,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
       } catch (e) {
         setState(() {
-          _message = e.toString();
         });
       }
   }
