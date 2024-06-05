@@ -1,6 +1,4 @@
-import 'package:djaaja_siha/langage_constant.dart';
 import 'package:flutter/material.dart';
-
 import 'my_app.dart';
 
 class ChangeLanguage extends StatefulWidget {

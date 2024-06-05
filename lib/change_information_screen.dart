@@ -12,7 +12,6 @@ class ChangeInformationScreen extends StatefulWidget {
 
 class _ChangeInformationScreenState extends State<ChangeInformationScreen> {
   String? _title;
-  String? _content;
 
   final TextEditingController _textFieldController = TextEditingController();
   
@@ -20,7 +19,6 @@ class _ChangeInformationScreenState extends State<ChangeInformationScreen> {
   void initState() {
     super.initState();
     _title=widget.title;
-    _content=widget.content;
   }
   @override
   Widget build(BuildContext context) {

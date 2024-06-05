@@ -1,7 +1,5 @@
 import 'package:djaaja_siha/langage_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-
 import 'authentification/auth_service.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
