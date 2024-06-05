@@ -54,6 +54,7 @@ class _SingupState extends State<Singup> {
     super.initState();
     _toggleFormMode();
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -63,7 +64,6 @@ class _SingupState extends State<Singup> {
     _confirmPasswordController.dispose();
     _nameController.dispose();
     _phonecontroller.dispose();
-    
   }
 
   @override
@@ -126,9 +126,8 @@ class _SingupState extends State<Singup> {
                       labelStyle: TextStyle(
                         color: Theme.of(context).primaryColor,
                       ),
-                      focusedBorder:const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.grey, width: 1),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 1),
                       ),
                     ),
                   ),
@@ -190,9 +189,8 @@ class _SingupState extends State<Singup> {
                       labelStyle: TextStyle(
                         color: Theme.of(context).primaryColor,
                       ),
-                      focusedBorder:const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.grey, width: 1),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 1),
                       ),
                     ),
                   ),
@@ -203,8 +201,9 @@ class _SingupState extends State<Singup> {
                     cursorColor: Colors.grey,
                     style: TextStyle(color: Theme.of(context).primaryColor),
                     decoration: InputDecoration(
-                      errorText:
-                          _isPasswordError ? translation(context).passwordsnotmatch : null,
+                      errorText: _isPasswordError
+                          ? translation(context).passwordsnotmatch
+                          : null,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Theme.of(context).primaryColor, width: 0.0),
@@ -247,8 +246,9 @@ class _SingupState extends State<Singup> {
                     cursorColor: Theme.of(context).primaryColor,
                     style: TextStyle(color: Theme.of(context).primaryColor),
                     decoration: InputDecoration(
-                      errorText:
-                          _isPasswordError ? translation(context).passwordsnotmatch : null,
+                      errorText: _isPasswordError
+                          ? translation(context).passwordsnotmatch
+                          : null,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Theme.of(context).primaryColor, width: 0.0),
@@ -268,8 +268,7 @@ class _SingupState extends State<Singup> {
                         color: Theme.of(context).primaryColor,
                       ),
                       focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.grey, width: 1),
+                        borderSide: BorderSide(color: Colors.grey, width: 1),
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -287,6 +286,81 @@ class _SingupState extends State<Singup> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 40),
+                  ElevatedButton(
+                    onPressed: () async {
+                      print("create pressed");
+                      print("is login");
+                      if (_passwordController.text !=
+                          _confirmPasswordController.text) {
+                        setState(() {
+                          _isPasswordError = true; // Set error flag to true
+                        });
+                        return; // Exit function if passwords do not match
+                      } else {
+                        setState(() {
+                          _isPasswordError = false;
+                          //_errorMessage = '';
+                        });
+
+                        UserModel? user =
+                            await _authService.createUserWithEmailAndPassword(
+                          _emailController.text,
+                          _passwordController.text,
+                          _nameController.text,
+                          "",
+                          _phonecontroller.text,
+                        );
+                        if (user != null) {
+                          print("user not null sign");
+                          _navigateToHomePage();
+                        } else {
+                          setState(() {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                      translation(context).failedregister)),
+                            );
+                          });
+                        }
+                        UserModel? userLog =
+                            await _authService.signInWithEmailAndPassword(
+                          _emailController.text,
+                          _passwordController.text,
+                        );
+                        if (userLog != null) {
+                          Provider.of<UserProvider>(context, listen: false)
+                              .setUser(user);
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setString('userModel', userLog.toJson());
+                          _navigateToHomePage();
+                        } else {
+                          setState(() {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                      translation(context).failedregister)),
+                            );
+                          });
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      translation(context).createaccount,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -294,9 +368,7 @@ class _SingupState extends State<Singup> {
                     translation(context).orsignupwith,
                     style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 10),
                   Center(
                     child: Container(
                       width: 50,
@@ -339,88 +411,12 @@ class _SingupState extends State<Singup> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () async {
-                      print("create pressed");
-
-                      print("is login");
-                      if (_passwordController.text !=
-                          _confirmPasswordController.text) {
-                        setState(() {
-                          _isPasswordError = true; // Set error flag to true
-                        });
-                        return; // Exit function if passwords do not match
-                      } else {
-                        setState(() {
-                          _isPasswordError = false;
-                          //_errorMessage = '';
-                        });
-
-                        UserModel? user =
-                            await _authService.createUserWithEmailAndPassword(
-                          _emailController.text,
-                          _passwordController.text,
-                          _nameController.text,
-                          "",
-                          _phonecontroller.text,
-                        );
-                        if (user != null) {
-                          print("user not null sign");
-                          _navigateToHomePage();
-                        } else {
-                          setState(() {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                               SnackBar(
-                                  content: Text(
-                                      translation(context).failedregister)),
-                            );
-                          });
-                        }
-                        UserModel? userLog =
-                            await _authService.signInWithEmailAndPassword(
-                          _emailController.text,
-                          _passwordController.text,
-                        );
-                        if (userLog != null) {
-                          Provider.of<UserProvider>(context, listen: false)
-                              .setUser(user);
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          await prefs.setString('userModel', userLog.toJson());
-                          _navigateToHomePage();
-                        } else {
-                          setState(() {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text(
-                                      translation(context).failedregister)),
-                            );
-                          });
-                        }
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      translation(context).createaccount,
-                      style:const TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
                         translation(context).alreadyhaveaccount,
-                        style:const TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                         ),
                       ),
