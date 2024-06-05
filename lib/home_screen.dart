@@ -2,12 +2,14 @@
 
 import 'package:camera/camera.dart';
 import 'package:djaaja_siha/about.dart';
+import 'package:djaaja_siha/authentification/user_model.dart';
 import 'package:djaaja_siha/diseases_lib.dart';
 import 'package:djaaja_siha/langage_constant.dart';
 import 'package:djaaja_siha/login_screen.dart';
 import 'package:djaaja_siha/my_app.dart';
 import 'package:djaaja_siha/take_picture.dart';
 import 'package:djaaja_siha/upload_picture.dart';
+import 'package:djaaja_siha/user_information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -30,14 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
   _getWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    final buttonWidth= _getWidth(context)*0.4;
-    var user = Provider.of<UserProvider>(context).user;
-    
+    final buttonWidth = _getWidth(context) * 0.4;
+    UserModel? user = Provider.of<UserProvider>(context).user;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).hintColor,
       key: _scaffoldKey,
       drawer: cstmDrawer(context, user),
       body: Container(
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             colors: [
               Color.fromARGB(31, 255, 255, 255),
               Color.fromARGB(38, 0, 238, 107)
-            ], // red to yellow
+            ],
             tileMode: TileMode.mirror, // repeats the gradient over the canvas
           ),
         ),
@@ -91,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Center(
                         child: Image.asset(
                           'assets/logo.png',
-                          scale: MediaQuery.of(context).size.width*0.002,
+                          scale: MediaQuery.of(context).size.width * 0.002,
                         ),
                       ),
                       const SizedBox(height: 1),
@@ -99,14 +100,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           AppLocalizations.of(context)!.wlcmtext,
                           textAlign: TextAlign.center,
-                          style:TextStyle(
-                              fontSize: MediaQuery.of(context).size.width*0.04,
-                              fontWeight: FontWeight.bold,
-                              color: const Color.fromARGB(255, 0, 168, 132),
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 0, 168, 132),
                           ),
                         ),
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.05),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -120,7 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 const TakePicture())));
                               },
                               style: ButtonStyle(
-                                  fixedSize:MaterialStatePropertyAll(Size(buttonWidth, buttonWidth)),
+                                  fixedSize: MaterialStatePropertyAll(
+                                      Size(buttonWidth, buttonWidth)),
                                   padding: MaterialStateProperty.all(
                                       const EdgeInsets.only(
                                           top: 20,
@@ -132,47 +135,41 @@ class _HomeScreenState extends State<HomeScreen> {
                                   shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(30)
-                                      )
-                                    )
-                              ),
+                                              BorderRadius.circular(30)))),
                               icon: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(
                                     Icons.camera_alt,
-                                    size: buttonWidth*0.4,
+                                    size: buttonWidth * 0.4,
                                     color: Colors.white,
                                   ),
                                   Text(
                                     AppLocalizations.of(context)!.takepics,
                                     style: TextStyle(
-                                      color: Colors.white, 
-                                      fontSize: buttonWidth*0.1
-                                    ),
+                                        color: Colors.white,
+                                        fontSize: buttonWidth * 0.1),
                                   )
                                 ],
                               )),
-                            IconButton(
+                          IconButton(
                               onPressed: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => const Upload()
-                                    )
-                                );
+                                        builder: (_) => const Upload()));
                               },
                               style: ButtonStyle(
-                                  fixedSize:MaterialStatePropertyAll(Size(buttonWidth, buttonWidth)),
+                                  fixedSize: MaterialStatePropertyAll(
+                                      Size(buttonWidth, buttonWidth)),
                                   padding: MaterialStateProperty.all(
                                       const EdgeInsets.only(
                                           top: 20,
                                           bottom: 20,
                                           left: 18,
-                                          right: 18
-                                      )
-                                  ),
+                                          right: 18)),
                                   backgroundColor: MaterialStateProperty.all(
                                       const Color.fromARGB(255, 0, 168, 132)),
                                   shape: MaterialStateProperty.all(
@@ -180,24 +177,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                           borderRadius:
                                               BorderRadius.circular(30)))),
                               icon: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(
                                     Icons.upload,
-                                    size: buttonWidth*0.4,
+                                    size: buttonWidth * 0.4,
                                     color: Colors.white,
                                   ),
                                   Text(
                                     AppLocalizations.of(context)!.uploadpics,
                                     style: TextStyle(
-                                      color: Colors.white, 
-                                      fontSize: buttonWidth*0.1
-                                    ),
+                                        color: Colors.white,
+                                        fontSize: buttonWidth * 0.1),
                                   )
                                 ],
-                              )
-                            ),
+                              )),
                         ],
                       ),
                     ],
@@ -211,7 +207,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  cstmDrawer(BuildContext context, user) {
+  cstmDrawer(BuildContext context, UserModel? user) {
+    print(user!.name);
+    print(user.phone);
+    print(user.email);
+    print(user);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -225,36 +225,64 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    radius: 45,
-                    backgroundColor: Theme.of(context).hintColor,
+                    radius: 40,
+                    backgroundColor: Theme.of(context).primaryColor,
                     child: ClipOval(
-                      child: Image.asset(
-                        'assets/logo.png',
-                        fit: BoxFit.fill,
-                      ),
+                      child: user.picture.isEmpty
+                          ? Image.asset(
+                            "assets/user.png",
+                            scale: 1.0,
+                          )
+                          : Image.network(
+                              user.picture,
+                              scale: 1.0,
+                            ),
                     ),
                   ),
-                  Text(
-                    "Welcome ${user.name}",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Theme.of(context).hintColor,
-                        fontWeight: FontWeight.bold,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        user.name,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).hintColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      Text(
+                        user.email,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context).hintColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               )),
+          ListTile(
+            leading: const Icon(Icons.account_circle_outlined),
+            title: Text(translation(context).myaccount),
+            onTap: () {
+              //_showAlertDialogLib(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => UserInformationScreen(
+                            user: user,
+                          )));
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.medical_information_outlined),
             title: Text(AppLocalizations.of(context)!.drawer1),
             onTap: () {
               //_showAlertDialogLib(context);
-               Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const DiseaseLib()
-                )
-              );
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const DiseaseLib()));
             },
           ),
           ListTile(
@@ -268,26 +296,23 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: const Icon(Icons.info_outline),
             title: Text(AppLocalizations.of(context)!.drawer4),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) =>const AboutScreen()
-                )
-              );
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const AboutScreen()));
             },
           ),
           ListTile(
-              leading: const Icon(Icons.logout),
-              title:const Text("Logout"),
-              onTap: () async {
-                await _authService.signOut();
-                final SharedPreferences prefs = await SharedPreferences.getInstance();
-                await prefs.remove('userModel');
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) =>const Login()),
-                );
-              },
+            leading: const Icon(Icons.logout),
+            title: Text(translation(context).logout),
+            onTap: () async {
+              await _authService.signOut();
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
+              await prefs.remove('userModel');
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const Login()),
+              );
+            },
           )
         ],
       ),
@@ -307,17 +332,17 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Theme.of(context).hintColor,
               title: Text(AppLocalizations.of(context)!.drawer2),
               content: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.2,
+                height: MediaQuery.of(context).size.height * 0.3,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     RadioListTile(
                       //activeColor: selectedLanguageCode == 'en'
-                      //    ? Colors.green 
+                      //    ? Colors.green
                       //    : Colors.white,
                       activeColor: Colors.green,
-                      title:const Text('English'),
+                      title: const Text('English'),
                       value: 'en',
                       groupValue: selectedLanguageCode,
                       onChanged: (value) {
@@ -331,7 +356,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       //    ? Colors.green // Change color when selected
                       //    : Colors.white,
                       activeColor: Colors.green,
-                      title:const Text('français'),
+                      title: const Text('français'),
                       value: 'fr',
                       groupValue: selectedLanguageCode,
                       onChanged: (value) {
@@ -345,7 +370,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       //    ? Colors.green // Change color when selected
                       //    : Colors.white,
                       activeColor: Colors.green,
-                      title:const Text('العربية'),
+                      title: const Text('العربية'),
                       value: 'ar',
                       groupValue: selectedLanguageCode,
                       onChanged: (value) {
@@ -360,17 +385,21 @@ class _HomeScreenState extends State<HomeScreen> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context); 
+                    Navigator.pop(context);
                   },
-                  child: Text(translation(context).cancel, style: TextStyle(color: Theme.of(context).primaryColor),),
+                  child: Text(
+                    translation(context).cancel,
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
                 ),
                 TextButton(
                   onPressed: () async {
-                    Locale loc= await setLocale(selectedLanguageCode);
+                    Locale loc = await setLocale(selectedLanguageCode);
                     MyApp.setLocale(context, loc);
-                    Navigator.pop(context); 
+                    Navigator.pop(context);
                   },
-                  child: Text(translation(context).confirmation, style: TextStyle(color: Theme.of(context).primaryColor)),
+                  child: Text(translation(context).confirmation,
+                      style: TextStyle(color: Theme.of(context).primaryColor)),
                 ),
               ],
             );
@@ -380,4 +409,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

@@ -12,9 +12,9 @@ Locale local = Locale(defaultLocale.languageCode);
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
   @override
-  State<MyApp> createState() => _MyAppState();  
-  static void setLocale(BuildContext context, Locale newLocal){
-    _MyAppState? state =context.findAncestorStateOfType<_MyAppState>();
+  State<MyApp> createState() => _MyAppState();
+  static void setLocale(BuildContext context, Locale newLocal) {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
     state?.setLocale(newLocal);
   }
 }
@@ -22,35 +22,35 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   void setLocale(Locale newLocal) {
     setState(() {
-      local=newLocal;
+      local = newLocal;
     });
   }
-   @override
+
+  @override
   void didChangeDependencies() {
-    getLocale().then((locale) => {
-      setLocale(locale)
-    });
+    getLocale().then((locale) => {setLocale(locale)});
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: const[
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const[
-        Locale('en'), 
-        Locale('ar'), 
-        Locale('fr'), 
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ar'),
+        Locale('fr'),
       ],
       locale: local,
       debugShowCheckedModeBanner: false,
       title: "Chicken AI",
-      theme: MyTheme.lightTheme, 
-      home:const SplashScreen(),
+      theme: MyTheme.lightTheme,
+      home: const SplashScreen(),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'package:djaaja_siha/langage_constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'user_model.dart';
 
 class AuthService {
@@ -8,13 +10,14 @@ class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Create a UserModel object based on User
-  UserModel? _userFromFirebaseUser( User? user, {String? name, String? accountType}) {
+  UserModel? _userFromFirebaseUser(User? user, {String? name, String? picture, String? phone}) {
     if (user != null) {
       return UserModel(
         uid: user.uid,
         email: user.email!,
-        name: name!,
-        accountType: accountType ?? 'vit',
+        name: name ?? '',
+        picture: picture ?? '',
+        phone: phone ?? '',
       );
     }
     return null;
@@ -26,13 +29,23 @@ class AuthService {
       if (user == null) {
         return null;
       }
-      DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
-      return _userFromFirebaseUser(user, name: userDoc['name'], accountType: userDoc['accountType']);
+      try {
+        DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
+        return _userFromFirebaseUser(
+          user, 
+          name: userDoc['name'], 
+          picture: userDoc['picture'], 
+          phone: userDoc['phone']
+        );
+      } catch (e) {
+        log('Error fetching user data: $e');
+        return null;
+      }
     });
   }
 
   // Register with email and password
-  Future<UserModel?> createUserWithEmailAndPassword(String email, String password, String name) async {
+  Future<UserModel?> createUserWithEmailAndPassword(String email, String password, String name, String picture, String phone) async {
     try {
       UserCredential result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
@@ -43,7 +56,8 @@ class AuthService {
           uid: user.uid,
           email: email,
           name: name,
-          accountType: 'user', // Default account type
+          picture: picture,
+          phone: phone,
         );
         await _firestore.collection('users').doc(user.uid).set(userModel.toMap());
 
@@ -65,13 +79,15 @@ class AuthService {
       UserCredential result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
       
-      print("get user data from firestore #######");
-      
       if (user != null) {
         // Get user data from Firestore
-        print("get user data from firestore");
         DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
-        return _userFromFirebaseUser(user, name: userDoc['name'], accountType: userDoc['accountType']);
+        return _userFromFirebaseUser(
+          user, 
+          name: userDoc['name'], 
+          picture: userDoc['picture'], 
+          phone: userDoc['phone']
+        );
       }
     } on FirebaseAuthException catch (e) {
       log('FirebaseSignInException: ${e.message}');
@@ -101,13 +117,19 @@ class AuthService {
             uid: user.uid,
             email: user.email!,
             name: user.displayName ?? 'user',
-            accountType: 'user', // Default account type
+            picture: user.photoURL ?? '',
+            phone: '', // Default phone is empty
           );
           await _firestore.collection('users').doc(user.uid).set(userModel.toMap());
         }
 
         // Return UserModel
-        return _userFromFirebaseUser(user, name: user.displayName);
+        return _userFromFirebaseUser(
+          user, 
+          name: user.displayName, 
+          picture: user.photoURL, 
+          phone: '' // Default phone is empty
+        );
       }
     } on FirebaseAuthException catch (e) {
       log('FirebaseGoogleException: ${e.message}');
@@ -141,6 +163,34 @@ class AuthService {
       log('FirebaseResetPasswordException: ${e.message}');
     } catch (e) {
       log('Exception reset password: $e');
+    }
+  }
+    // Change password
+  Future<void> changePassword(context, String currentPassword, String newPassword) async {
+    User? user = _firebaseAuth.currentUser;
+    if (user != null) {
+      try {
+        // Reauthenticate the user with the current password
+        AuthCredential credential = EmailAuthProvider.credential(email: user.email!, password: currentPassword);
+        await user.reauthenticateWithCredential(credential);
+        // Update the password
+        await user.updatePassword(newPassword);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(translation(context).changepasssucces)),
+        );
+      } on FirebaseAuthException catch (e) {
+        log('FirebaseChangePasswordException: ${e.message}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(translation(context).changepassfailed)),
+        );
+      } catch (e) {
+        log('Exception change password: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(translation(context).changepassfailed)),
+        );
+      }
+    } else {
+      log('No user is currently signed in');
     }
   }
 }

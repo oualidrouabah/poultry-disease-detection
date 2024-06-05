@@ -43,7 +43,18 @@ class AboutScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Theme.of(context).hintColor,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(
+                0.8, 0.0), // 10% of the width, so there are ten blinds.
+            colors: [
+              Color.fromARGB(31, 255, 255, 255),
+              Color.fromARGB(38, 0, 238, 107)
+            ], 
+            tileMode: TileMode.mirror, // repeats the gradient over the canvas
+          ),
+        ),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

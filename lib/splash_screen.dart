@@ -22,7 +22,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  
+
   Future<UserModel?> getUserModel() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userJson = prefs.getString('userModel');
@@ -32,28 +32,32 @@ class _SplashScreenState extends State<SplashScreen> {
     return null;
   }
 
-  
   @override
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () async {
       UserModel? user = await getUserModel();
-      print(user);
+      print(user.toString());
+      print(user?.name);
+      print(user?.email);
+      print(user?.uid);
+      print(user?.phone);
+
       Provider.of<UserProvider>(context, listen: false).setUser(user);
-      if (user == null){
+      if (user == null) {
         print("user null");
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) =>const Login()),
+          MaterialPageRoute(builder: (context) => const Login()),
         );
         return;
-      } 
-      print("user not null");    
+      }
+      print("user not null");
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
-    });    
+    });
   }
 
   Future<void> checkConnection(BuildContext context) async {
@@ -61,16 +65,16 @@ class _SplashScreenState extends State<SplashScreen> {
     if (connectivityResult == ConnectivityResult.none) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>const NoConnectionScreen()),
+        MaterialPageRoute(builder: (context) => const NoConnectionScreen()),
       );
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     }
   }
- /* Future<void> checkConnection_v2 (BuildContext context) async {
+  /* Future<void> checkConnection_v2 (BuildContext context) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
       Navigator.pushReplacement(
@@ -85,9 +89,8 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }*/
 
-  
   @override
-  Widget build(BuildContext context) {   
+  Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).hintColor,
@@ -103,7 +106,8 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 70),
             Builder(builder: (context) {
               return CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).primaryColor),
               );
             })
           ],

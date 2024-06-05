@@ -1,5 +1,44 @@
 {
     "@@locale": "en",
+    "login": "Login",
+    "logout":"Logout",
+    "alreadyhaveaccount": "Already have an account?",
+    "createaccount": "Create Account",
+    "failedsignin": "Failed to sign in. Please check your credentials.",
+    "failedregister": "Failed to register. Please try again.",
+    "failedsigningoogle": "Failed to sign in with Google. Please try again.",
+    "orsignupwith": "Or with",
+    "confirmpassword": "Confirm password",
+    "passwordsnotmatch": "Passwords do not match.",
+    "password": "Password",
+    "phone": "Phone",
+    "email": "Email",
+    "name": "Name",
+    
+    "forgotpassword":"Forgot Password?",
+    
+    "signtocont":"Sign to continue",
+    "wlcm":"Welcome",
+    "doensthaveacc":"Doesnt have Account?",
+
+    "hello":"Hello",
+    "submit":"Submit",
+    "enternew":"Enter new",
+
+    "emailsend":"'Password reset email sent'",
+    "entermail":"Enter the email address you've used to register.",
+    "myaccount":"My account",
+    "changepass":"Change password",
+
+    "chngepass":"Change Password",
+    "enteroldnewpass":"Enter the old and new password.",
+    "oldpass":"Old password",
+    "newpass":"New password",
+
+    "changepasssucces":"Password changed successfully",
+    "changepassfailed":"Error changing password",
+
+
     "aboutIntro": "Welcome to Chicken AI, your essential tool for revolutionizing poultry disease detection. Our mobile application is designed to empower poultry farmers, veterinarians, and professionals with rapid and accurate fecal analysis, enabling proactive management of poultry health.",
     "aboutIntro2": "Using cutting-edge technology including artificial intelligence and machine learning, Chicken AI simplifies disease detection. By capturing and submitting fecal samples through the app, users receive actionable insights swiftly, facilitating timely intervention and optimized treatment strategies.",
     "aboutIntro3": "Join us in our mission to elevate poultry health standards and transform disease management in the industry. With us, ensure the vitality and productivity of your poultry flock with confidence and ease.",

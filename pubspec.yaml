@@ -33,6 +33,7 @@ dependencies:
   flutter_facebook_auth: ^6.0.4
   provider: ^6.1.2
   google_sign_in: ^6.2.1
+  firebase_storage: ^11.7.7
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,8 @@ flutter:
 
   assets:
     - assets/logo.png
+    - assets/user.png
+    - assets/google.png
     - assets/sick_logo.png
     - assets/healthy_logo.png
     - assets/labels.txt
