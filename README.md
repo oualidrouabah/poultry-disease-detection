@@ -9,23 +9,21 @@ This mobile application detects poultry diseases from images of poultry fecal ma
 - **Disease Detection:** Identify various poultry diseases based on fecal images.
 - **User-Friendly Interface:** Easy-to-use interface for uploading and analyzing images.
 - **Real-Time Analysis:** Get results in real-time.
-- **History:** Keep a history of all analyzed images and results.
 - **Offline Mode:** Works without an internet connection after initial setup.
 - **High Accuracy:** Utilizes a TensorFlow Lite model trained with 6000 images using the DenseNet architecture, achieving 98% accuracy.
 
 ## Screenshots
 
-### Home Screen
-![Home Screen](assets/home_screen.png)
-
-### Results
-![Results](assets/result_screen.png)
+<p align="center">
+  <img src="assets/home_screen.png" alt="Home Screen" width="200" height="400"/>
+  <img src="assets/results_screen.png" alt="Results" width="200" height="400"/>
+</p>
 
 ## Download
 
 You can download the APK file for the application from the link below:
 
-[Download APK](path/to/poultry-disease-detection.apk)
+[Download APK](app-release.apk)
 
 ## Installation
 
@@ -33,7 +31,7 @@ To install and run this Flutter application, follow these steps:
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/poultry-disease-detection.git
+    git clone https://github.com/oualidrouabah/poultry-disease-detection.git
     ```
 2. Navigate to the project directory:
     ```sh
@@ -53,7 +51,6 @@ To install and run this Flutter application, follow these steps:
 
 1. Open the application on your mobile device.
 2. Take a picture of the poultry fecal matter or upload an existing image.
-3. Click the "Analyze" button to get the results.
 4. View the diagnosis and suggested actions.
 
 ## Contributing
@@ -80,17 +77,11 @@ We welcome contributions from the community. To contribute:
 
 This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. See the [LICENSE](LICENSE) file for details.
 
-## Acknowledgements
-
-- [OpenAI](https://www.openai.com/) for providing the GPT model used for generating parts of this README.
-- TensorFlow Lite for the model integration.
-- Any other acknowledgements...
-
 ---
 
 Feel free to reach out if you have any questions or need further assistance!
 
 **Contact Information:**
 
-- Email: your.email@example.com
-- Twitter: [@yourtwitterhandle](https://twitter.com/yourtwitterhandle)
+- Email: oualidrouabah56@gmail.com
+- Twitter: [@yourtwitterhandle](https://twitter.com/RouabahOualid
