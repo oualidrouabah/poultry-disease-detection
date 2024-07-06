@@ -16,7 +16,7 @@ This mobile application detects poultry diseases from images of poultry fecal ma
 
 <p align="center">
   <img src="assets/home_screen.png" alt="Home Screen" width="200" height="400"/>
-  <img src="assets/results_screen.png" alt="Results" width="200" height="400"/>
+  <img src="assets/result_screen.png" alt="Results" width="200" height="400"/>
 </p>
 
 ## Download
