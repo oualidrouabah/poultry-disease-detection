@@ -27,7 +27,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final AuthService _authService = AuthService();
+  //final AuthService _authService = AuthService();
 
   _getWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
@@ -36,11 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final buttonWidth = _getWidth(context) * 0.4;
-    UserModel? user = Provider.of<UserProvider>(context).user;
+    //UserModel? user = Provider.of<UserProvider>(context).user;
 
     return Scaffold(
       key: _scaffoldKey,
-      drawer: cstmDrawer(context, user),
+      drawer: cstmDrawer(context),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -207,11 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  cstmDrawer(BuildContext context, UserModel? user) {
-    print(user!.name);
-    print(user.phone);
-    print(user.email);
-    print(user);
+  cstmDrawer(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -228,7 +224,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     radius: 40,
                     backgroundColor: Theme.of(context).primaryColor,
                     child: ClipOval(
-                      child: user.picture.isEmpty
+                      child: Image.asset(
+                        "assets/logo.png",
+                        scale: 1.0,
+                      )
+                     /* child: user!.picture.isEmpty
                           ? Image.asset(
                             "assets/user.png",
                             scale: 1.0,
@@ -236,25 +236,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           : Image.network(
                               user.picture,
                               scale: 1.0,
-                            ),
+                            ),*/
                     ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
-                        user.name,
+                      /*Text(
+                        "name",
                         style: TextStyle(
                           fontSize: 20,
                           color: Theme.of(context).hintColor,
                           fontWeight: FontWeight.bold,
                         ),
-                      ),
+                      ),*/
                       Text(
-                        user.email,
+                        "Chicken AI",
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 20,
                           color: Theme.of(context).hintColor,
                           fontWeight: FontWeight.bold,
                         ),
@@ -263,11 +263,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               )),
-          ListTile(
+          /*ListTile(
             leading: const Icon(Icons.account_circle_outlined),
             title: Text(translation(context).myaccount),
             onTap: () {
-              //_showAlertDialogLib(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -275,12 +274,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             user: user,
                           )));
             },
-          ),
+          ),*/
           ListTile(
             leading: const Icon(Icons.medical_information_outlined),
             title: Text(AppLocalizations.of(context)!.drawer1),
             onTap: () {
-              //_showAlertDialogLib(context);
               Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const DiseaseLib()));
             },
@@ -300,23 +298,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(builder: (_) => const AboutScreen()));
             },
           ),
-          ListTile(
+          /*ListTile(
             leading: const Icon(Icons.logout),
             title: Text(translation(context).logout),
             onTap: () async {
-              await _authService.signOut();
-              final SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
-              await prefs.remove('userModel');
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const Login()),
-              );
+              _logout();
             },
-          )
+          )*/
         ],
       ),
     );
+  }
+
+  _logout(){
+    //await _authService.signOut();
+      //        final SharedPreferences prefs =
+       //           await SharedPreferences.getInstance();
+       //       await prefs.remove('userModel');
+        //      Navigator.pushReplacement(
+         //       context,
+          //      MaterialPageRoute(builder: (context) => const Login()),
+           //   );
   }
 
   _showAlertDialogLanguage(cntx) {

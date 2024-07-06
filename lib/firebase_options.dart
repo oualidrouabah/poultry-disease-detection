@@ -41,48 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAmdoGGLT-9iXkpHcVDAwAe9xH5MDgtZtQ',
-    appId: '1:219694789124:web:1dc299b3faa882cb5bfb51',
-    messagingSenderId: '219694789124',
-    projectId: 'chicken-ai-7d8a3',
-    authDomain: 'chicken-ai-7d8a3.firebaseapp.com',
-    storageBucket: 'chicken-ai-7d8a3.appspot.com',
-    measurementId: 'G-0BY1ZD9FKB',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    authDomain: '',
+    storageBucket: '',
+    measurementId: '',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDWFCVbj7zqLQ7Vj1cixc77-NUD3XcZSS4',
-    appId: '1:219694789124:android:3c349a050cf21b085bfb51',
-    messagingSenderId: '219694789124',
-    projectId: 'chicken-ai-7d8a3',
-    storageBucket: 'chicken-ai-7d8a3.appspot.com',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB4PiKICIk4WSygSJDLR_p8rTXDiPtxqDY',
-    appId: '1:219694789124:ios:4627c977750a95415bfb51',
-    messagingSenderId: '219694789124',
-    projectId: 'chicken-ai-7d8a3',
-    storageBucket: 'chicken-ai-7d8a3.appspot.com',
-    iosBundleId: 'com.example.djaajaSiha',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+    iosBundleId: '',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyB4PiKICIk4WSygSJDLR_p8rTXDiPtxqDY',
-    appId: '1:219694789124:ios:4627c977750a95415bfb51',
-    messagingSenderId: '219694789124',
-    projectId: 'chicken-ai-7d8a3',
-    storageBucket: 'chicken-ai-7d8a3.appspot.com',
-    iosBundleId: 'com.example.djaajaSiha',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+    iosBundleId: '',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAmdoGGLT-9iXkpHcVDAwAe9xH5MDgtZtQ',
-    appId: '1:219694789124:web:7dae59dfa1149fed5bfb51',
-    messagingSenderId: '219694789124',
-    projectId: 'chicken-ai-7d8a3',
-    authDomain: 'chicken-ai-7d8a3.firebaseapp.com',
-    storageBucket: 'chicken-ai-7d8a3.appspot.com',
-    measurementId: 'G-17WTKFZEBZ',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    authDomain: '',
+    storageBucket: '',
+    measurementId: '',
   );
 }

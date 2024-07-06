@@ -9,7 +9,6 @@ import 'package:connectivity/connectivity.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
-
 import 'authentification/user_model.dart';
 import 'authentification/user_provide.dart';
 
@@ -36,23 +35,17 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () async {
-      UserModel? user = await getUserModel();
-      print(user.toString());
-      print(user?.name);
-      print(user?.email);
-      print(user?.uid);
-      print(user?.phone);
-
-      Provider.of<UserProvider>(context, listen: false).setUser(user);
-      if (user == null) {
+      //UserModel? user = await getUserModel();
+      //Provider.of<UserProvider>(context, listen: false).setUser(user);
+      //if you want to create users... with firebase change 'firebase_options.dart'
+      /*if (user == null) {
         print("user null");
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const Login()),
         );
         return;
-      }
-      print("user not null");
+      }*/
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -106,8 +99,9 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 70),
             Builder(builder: (context) {
               return CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).primaryColor),
+                valueColor: AlwaysStoppedAnimation<Color> (
+                    Theme.of(context).primaryColor
+                ),
               );
             })
           ],

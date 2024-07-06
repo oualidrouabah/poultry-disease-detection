@@ -19,17 +19,17 @@ Future<void> main() async{
   } on CameraException catch (e) {
     log('Error in fetching the cameras: $e');
   }
+  /*
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
-  //FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
-  
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: const MyApp(),
-    ),);
+    ),
+  );*/
+  runApp(const MyApp());
 }
