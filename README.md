@@ -1,4 +1,4 @@
-# Poultry Disease Detection App
+# Poultry Disease Detection App "Chicken AI"
 
 ![Poultry Disease Detection](assets/logo.png)
 
