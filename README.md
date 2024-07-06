@@ -2,7 +2,8 @@
 
 ![Poultry Disease Detection](assets/logo.png)
 
-This mobile application detects poultry diseases from images of poultry fecal matter. It uses advanced image processing techniques and machine learning algorithms to provide accurate diagnoses, helping poultry farmers manage and maintain the health of their flocks.
+Chicken AI is a mobile application designed to detect poultry diseases from images of poultry fecal matter. It leverages advanced image processing techniques and a machine learning model to provide accurate diagnoses, helping poultry farmers manage the health of their flocks effectively.
+
 
 ## Features
 
